@@ -36,7 +36,7 @@ const messageInput = ref('')
 
 const userId = uuidv4()
 
-const { send, data } = useWebSocket('ws://localhost:3000/api/_ws')
+const { send, data } = useWebSocket(`ws://${location.host}/api/_ws`)
 
 watch(data, () => {
 	const dataReceived: { userId: ''; message: string } = JSON.parse(data.value)
