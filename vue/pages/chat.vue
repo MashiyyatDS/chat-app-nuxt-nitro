@@ -8,20 +8,32 @@
 
 		<div class="chat-body">
 			<div v-for="(message, key) in messages" :key="key" :class="`d-flex ${message.userId === userId ? 'justify-start' : 'justify-end'}`">
-				<v-card max-width="500" class="ma-1" variant="flat" :color="message.userId === userId ? 'blue' : 'green'" density="compact">
-					<v-card-text>{{ message.message }}</v-card-text>
-				</v-card>
+				<v-sheet
+					max-width="500"
+					class="mb-1 pl-2 pr-2 pt-1 pb-1 rounded-lg"
+					variant="flat"
+					:color="message.userId === userId ? 'blue' : 'green'"
+					density="compact">
+					<small>{{ message.message }}</small>
+				</v-sheet>
 			</div>
 		</div>
 
 		<div class="chat-actions">
-			<div class="d-flex">
-				<v-text-field v-model="messageInput" type="text" hide-details variant="outlined" density="compact" placeholder="Send Message">
+			<form @submit.prevent="sendMessage">
+				<v-text-field
+					@enter="sendMessage"
+					v-model="messageInput"
+					type="text"
+					hide-details
+					variant="outlined"
+					density="compact"
+					placeholder="Send Message">
 					<template #append-inner>
 						<v-btn @click="sendMessage" text="send" size="small" color="primary" class="ml-1 text-capitalize" variant="flat" />
 					</template>
 				</v-text-field>
-			</div>
+			</form>
 		</div>
 	</div>
 </template>
