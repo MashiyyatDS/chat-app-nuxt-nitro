@@ -9,10 +9,12 @@
 		<div class="chat-body">
 			<div v-for="(message, key) in messages" :key="key" :class="`d-flex ${message.userId === userId ? 'justify-start' : 'justify-end'}`">
 				<div class="d-flex flex-column">
-					<small v-if="messages[key - 1]?.userId !== message.userId && message.userId !== userId">{{ message.userId }}</small>
+					<small v-if="messages[key - 1]?.userId !== message.userId && message.userId !== userId" class="text-caption text-grey">{{
+						message.userId
+					}}</small>
 					<v-sheet
 						max-width="500"
-						class="mb-1 pl-2 pr-2 pt-1 pb-1 rounded-lg"
+						class="mb-1 pl-2 pr-2 pt-1 pb-1 rounded-lg align-self-end"
 						variant="flat"
 						:color="message.userId === userId ? 'blue' : 'green'"
 						density="compact">
