@@ -8,14 +8,17 @@
 
 		<div class="chat-body">
 			<div v-for="(message, key) in messages" :key="key" :class="`d-flex ${message.userId === userId ? 'justify-start' : 'justify-end'}`">
-				<v-sheet
-					max-width="500"
-					class="mb-1 pl-2 pr-2 pt-1 pb-1 rounded-lg"
-					variant="flat"
-					:color="message.userId === userId ? 'blue' : 'green'"
-					density="compact">
-					<small>{{ message.message }}</small>
-				</v-sheet>
+				<div class="d-flex flex-column">
+					<small v-if="messages[key - 1]?.userId !== message.userId && message.userId !== userId">{{ message.userId }}</small>
+					<v-sheet
+						max-width="500"
+						class="mb-1 pl-2 pr-2 pt-1 pb-1 rounded-lg"
+						variant="flat"
+						:color="message.userId === userId ? 'blue' : 'green'"
+						density="compact">
+						<small>{{ message.message }}</small>
+					</v-sheet>
+				</div>
 			</div>
 		</div>
 
@@ -54,6 +57,8 @@ watch(data, () => {
 	const dataReceived: { userId: ''; message: string } = JSON.parse(data.value)
 
 	messages.value.push(dataReceived)
+
+	console.log(dataReceived)
 })
 
 function sendMessage() {

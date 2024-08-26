@@ -1,14 +1,16 @@
 const roomID = 'asdasd'
+const messageHistory: any[] = []
 
 export default defineWebSocketHandler({
 	open(peer) {
 		peer.subscribe(roomID)
-
-		console.log('Another User Joined')
 	},
 	message(peer, message) {
-		console.log(message.text())
+		messageHistory.push(JSON.parse(message.text()))
 
-		peer.publish(roomID, message.text())
+		peer.publish(roomID, {
+			...JSON.parse(message.text()),
+			messageHistory,
+		})
 	},
 })
