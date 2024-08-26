@@ -11,4 +11,11 @@ export default defineNuxtConfig({
 		LARAVEL_URL: process.env.LARAVEL_URL,
 	},
 	css: ['~/assets/css/main.css'],
+	nitro: {
+		experimental: {
+			websocket: true,
+		},
+	},
+	plugins: [{ src: '~/plugins/vuetify' }],
+	ssr: false,
 })
