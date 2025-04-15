@@ -52,7 +52,7 @@ const messages = ref<{ userId: ''; message: string }[]>([])
 const messageInput = ref('')
 const userId = uuidv4()
 
-const { send, data, open } = useWebSocket(`/api/_ws`, {
+const { send, data, open } = useWebSocket(`/api/websocket`, {
 	immediate: false,
 	async onMessage() {
 		const dataReceived: { userId: ''; message: string } = JSON.parse(data.value)
