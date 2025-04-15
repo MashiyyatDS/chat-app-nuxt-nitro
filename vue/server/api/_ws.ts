@@ -1,4 +1,4 @@
-const roomID = 'asdasd'
+const roomID = 'chat-room'
 const messageHistory: any[] = []
 
 export default defineWebSocketHandler({
