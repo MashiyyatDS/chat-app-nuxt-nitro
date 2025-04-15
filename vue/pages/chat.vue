@@ -44,23 +44,24 @@
 </template>
 
 <script setup lang="ts">
-import { useWebSocket } from '@vueuse/core'
 //@ts-ignore
 import { v4 as uuidv4 } from 'uuid'
+import { useWebSocket } from '@vueuse/core'
 
 const messages = ref<{ userId: ''; message: string }[]>([])
 const messageInput = ref('')
 
 const userId = uuidv4()
 
-const { send, data } = useWebSocket(`wss://${location.host}/api/_ws`)
+const { send, data, open } = useWebSocket(`wss://${location.host}/api/_ws`, {
+	immediate: false,
+	async onMessage() {
+		const dataReceived: { userId: ''; message: string } = JSON.parse(data.value)
 
-watch(data, () => {
-	const dataReceived: { userId: ''; message: string } = JSON.parse(data.value)
+		messages.value.push(dataReceived)
 
-	messages.value.push(dataReceived)
-
-	console.log(dataReceived)
+		console.log('Data Received', dataReceived)
+	},
 })
 
 function sendMessage() {
@@ -78,6 +79,8 @@ function sendMessage() {
 
 	messageInput.value = ''
 }
+
+onMounted(() => open())
 </script>
 
 <style scoped lang="scss">
